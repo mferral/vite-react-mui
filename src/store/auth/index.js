@@ -13,7 +13,7 @@ const authSlice = createSlice({
         [login.fulfilled]: (state, { payload }) => {            
             state.loading = false
             if (payload.jwt) {                
-                localStorage.setItem('token', payload.jwt)                                
+                localStorage.setItem('token', payload.jwt)
                 window.location.href ='/dashboard'
             } else state.error = true            
         },
