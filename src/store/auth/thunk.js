@@ -8,7 +8,9 @@ export const login = createAsyncThunk(
                     identifier: data.email,
                     password: data.password,
                 }
-        const  res = await HTTP.post('auth/local', params)            
+        localStorage.removeItem('token')
+        const  res = await HTTP.post('auth/local', params)   
+        console.log(res);         
         return res.data
     }
 )
