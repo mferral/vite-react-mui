@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Header from "./header";
 import Footer from "./footer";
-
+import SnackMessage from '@/components/SnackMessage';
 
 const mdTheme = createTheme();
 
@@ -42,6 +42,7 @@ function AdminLayout({ children }) {
             </Container>
         </Box>
         </Box>
+        <SnackMessage />
     </ThemeProvider>
     );
 }

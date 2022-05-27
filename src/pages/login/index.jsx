@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Form from './Form'
 import Footer from '@/layouts/admin/Footer'
+import SnackMessage from '@/components/SnackMessage';
 // import Button from '@mui/material/Button';
 const theme = createTheme();
 
@@ -36,6 +37,7 @@ export default function Login() {
             {/* <Button type="button" onClick={() => submitForm('formLogin')} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Submit Form
             </Button> */}
+            <SnackMessage />
         </Container>
     </ThemeProvider>
     );

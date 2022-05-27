@@ -21,9 +21,9 @@ function Articulo() {
         <AlertConfirm 
             ref={alertRef}
             titulo={'Agregar Articulo'}
-            contenido={'Los datos son correctos ?'}
-            submit={submit}
-        />
+            // contenido={'Los datos son correctos ?'}
+            accion={submit}
+        />        
     </div>
     )
 }

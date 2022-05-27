@@ -23,7 +23,7 @@ function Form() {
         email: '',
         password: '',
     });
-    const { isValidate, errors } = useValidate(formData, schemaLogin)
+    const { isValidate, errors } = useValidate()
 
     const handleChange = (event) => {
         const { name, value, type } = event.target;    

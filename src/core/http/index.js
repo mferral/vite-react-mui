@@ -6,10 +6,11 @@ export const HTTP = axios.create({
 })
 
 HTTP.interceptors.request.use((request) => {
-  if (localStorage.getItem('token') !== null) request.headers.Authorization = `Bearer ${localStorage.getItem('token')}`  
+  if (localStorage.getItem('token')) request.headers.Authorization = `Bearer ${localStorage.getItem('token')}`  
   return request
 })
 
 HTTP.interceptors.response.use((response) => {
+    // store.dispatch(openSnackbar)
     return response
 })

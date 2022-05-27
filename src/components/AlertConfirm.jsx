@@ -9,10 +9,16 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { forwardRef, useImperativeHandle } from 'react'
 
-const AlertConfirm = forwardRef(({ titulo, contenido, submit }, ref) => {
+const AlertConfirm = forwardRef(({ titulo, contenido, accion }, ref) => {
     const [open, setOpen] = useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const items = {
+        contenido: contenido ? contenido : 'Esta seguro de realizar esta accion ?',
+        titulo: titulo ? titulo : 'Ventana de Dialogo',
+        accion: accion ? accion : () => { console.log('Action Trigger') }
+    }
 
     useImperativeHandle(ref, () => ({
         handleClickOpen() {
@@ -24,18 +30,18 @@ const AlertConfirm = forwardRef(({ titulo, contenido, submit }, ref) => {
     };
 
     const handleSubmit = () => {
-        submit()
+        items.accion()
         setOpen(false);
     };
     return (
     <>
         <Dialog fullScreen={fullScreen} open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title"  fullWidth={true} maxWidth={'xs'}>
             <DialogTitle id="responsive-dialog-title">
-                { titulo }
+                { items.titulo }
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    { contenido }
+                    { items.contenido }
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
