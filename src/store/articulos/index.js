@@ -11,7 +11,7 @@ const articulosSlice = createSlice({
     initialState,
     extraReducers: {        
         [articulosList.fulfilled]: (state, { payload }) => {
-            state.loading = false            
+            state.loading = false
             state.list = payload
         },
         [articulosList.rejected]: (state) => {

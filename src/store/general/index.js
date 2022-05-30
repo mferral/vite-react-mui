@@ -1,17 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    snackbar: true,
+    snackbar: false,
+    snackText: '',
+    snackType: '',
 }
 
 export const generalSlice = createSlice({
     name: 'general',
     initialState,
     reducers: {
-        openSnackbar: (state) => {            
+        openSnackbar: (state, { payload }) => {
+            console.log(payload.message);   
+            state.snackText = payload.message
+            state.snackType = payload.type
             state.snackbar = true            
         },
-        closeSnakbar: (state) => {
+        closeSnakbar: (state) => {            
+            state.snackText = ''
             state.snackbar = false
         },        
     },

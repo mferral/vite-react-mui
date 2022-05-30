@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { HTTP } from '@/core/http'
+import { HttpPost } from '@/core/http'
 import { openSnackbar } from '@/store/general'
 
 export const login = createAsyncThunk(
@@ -9,14 +9,9 @@ export const login = createAsyncThunk(
                     identifier: data.email,
                     password: data.password,
                 }
-        localStorage.removeItem('token')
-        try {
-            const  res = await HTTP.post('auth/local', params)   
-            return res.data
-        }catch (error){                 
-            console.log(error);
-            dispatch(openSnackbar())
-            return error.response.data
-        }        
+        localStorage.removeItem('token')        
+        const  res = await HttpPost('auth/local', params, dispatch)   
+        return res
+        
     }
 )
