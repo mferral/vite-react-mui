@@ -9,7 +9,10 @@ const initialState = {
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    extraReducers: {        
+    extraReducers: {   
+        [login.pending]: (state) => {
+            state.loading = true
+        },     
         [login.fulfilled]: (state, { payload }) => {            
             state.loading = false            
             if (payload.jwt) {                

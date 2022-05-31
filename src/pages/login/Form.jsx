@@ -59,7 +59,7 @@ function Form() {
             <FormControlLabel control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
             />
-            <Button type="submit" name="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" name="submit" fullWidth disabled={authState.loading} variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign In
             </Button>
             <Grid container>
