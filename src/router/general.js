@@ -1,8 +1,4 @@
-import AdminLayout from '@/layouts/admin'
-
 import Login from '@/pages/login'
-import Dashboard from '@/pages/dashboard'
-import Users from '@/pages/users'
 import Index from '@/pages'
 
 export default [
@@ -16,17 +12,4 @@ export default [
         component:Login,
         auth:false,        
     },
-    {   
-        path:"/dashboard",
-        component:Dashboard,
-        auth:false,
-        layout: AdminLayout
-    },
-    {
-        path:"/usuarios",
-        component:Users,
-        auth:false,
-        layout: AdminLayout
-    },
-    
 ]

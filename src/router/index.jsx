@@ -1,10 +1,10 @@
 import Routing from '@/core/routing'
 import general from '@/router/general'
-import articulos from '@/router/articulos'
+import admin from '@/router/admin'
 
 const combineRoutes = [    
     ...general,
-    ...articulos,
+    ...admin,
 ]
 
 const Routes = () => {

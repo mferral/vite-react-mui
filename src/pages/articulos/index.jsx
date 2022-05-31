@@ -10,6 +10,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 
 import { useNavigate } from "react-router-dom";
@@ -24,9 +25,13 @@ function Articulos() {
     const articulos = useSelector((state) => state.articulos)
 
     useEffect(() => {
-        dispatch(articulosList())
+        dispatch(articulosList({page: 1}))
     }, [])
 
+    const handleChangePage = (event, newPage) => {
+        console.log(newPage);
+        dispatch(articulosList({page: newPage + 1}))
+    };
     return (    
         <>
             <Grid container alignItems="baseline" direction="row" justifyContent="space-between">
@@ -37,7 +42,7 @@ function Articulos() {
                 </Grid>
                 <Grid item>
                     <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                        <Fab size="small" color="secondary" aria-label="add" onClick={()=> navigate("/articulo")}>
+                        <Fab size="small" color="secondary" aria-label="add" onClick={()=> navigate("/admin/articulo")}>
                             <AddIcon />
                         </Fab>
                     </Box>
@@ -62,14 +67,22 @@ function Articulos() {
                             <TableCell>
                                 {row.id}
                             </TableCell>
-                            <TableCell>{row.titulo}</TableCell>
-                            <TableCell>{row.descripcion}</TableCell>
-                            <TableCell align="right">{row.precio}</TableCell>
+                            <TableCell>{row.attributes.titulo}</TableCell>
+                            <TableCell>{row.attributes.descripcion}</TableCell>
+                            <TableCell align="right">{row.attributes.precio}</TableCell>
                         </TableRow>
                     ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[10]}
+                component="div"
+                count={articulos.pagination.total}
+                rowsPerPage={articulos.pagination.pageSize}
+                page={articulos.pagination.page - 1}
+                onPageChange={handleChangePage}
+            />        
         </>
     )
 }

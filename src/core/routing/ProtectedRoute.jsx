@@ -2,9 +2,13 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ auth, children}) => {
 
-    const validRoute = () => {
-        console.log('Check token in API');                        
-        return auth ?  <Navigate to="/login" replace={true} /> : children
+    const validRoute = () => {                
+        if (auth && !localStorage.getItem('token')){
+            console.log('Check token in API');
+            return <Navigate to="/login" replace={true} />
+        }else{
+            return children
+        }
     }
 
     return validRoute();

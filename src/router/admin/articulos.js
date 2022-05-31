@@ -1,21 +1,18 @@
 import AdminLayout from '@/layouts/admin'
-
-import Login from '@/pages/login'
-import Dashboard from '@/pages/dashboard'
 import Articulos from '@/pages/articulos'
 import Articulo from '@/pages/articulos/add'
 
 export default [
     {
-        path:"/articulos",
+        path:"/admin/articulos",
         component:Articulos,
-        auth:false,
+        auth: true,
         layout: AdminLayout
     },
     {
-        path:"/articulo",
+        path:"/admin/articulo",
         component:Articulo,
-        auth:false,
+        auth: true,
         layout: AdminLayout
     },
 ]

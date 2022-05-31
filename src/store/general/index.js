@@ -11,7 +11,6 @@ export const generalSlice = createSlice({
     initialState,
     reducers: {
         openSnackbar: (state, { payload }) => {
-            console.log(payload.message);   
             state.snackText = payload.message
             state.snackType = payload.type
             state.snackbar = true            

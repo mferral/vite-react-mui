@@ -8,39 +8,51 @@ import PeopleIcon from '@mui/icons-material/People';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useNavigate } from "react-router-dom";
-
+import AlertConfirm from '@/components/AlertConfirm';
+import { useRef } from 'react'
 
 export const MainListItems = () =>{
   const navigateTo = useNavigate();
-
+  const alertRef = useRef();
   const handleClick = (e) => navigateTo(e.currentTarget.getAttribute('url'))
+
+  const handleClickLogout = (e) => {
+    localStorage.removeItem('token')
+    navigateTo('/login')
+  }
   
   return(
     <>
-        <ListItemButton onClick={handleClick} url='/dashboard'>
+        <ListItemButton onClick={handleClick} url='/admin/dashboard'>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
-        <ListItemButton onClick={handleClick} url='/articulos'>          
+        <ListItemButton onClick={handleClick} url='/admin/articulos'>          
           <ListItemIcon>
             <ShoppingCartIcon />
           </ListItemIcon>
           <ListItemText primary="Articulos" />
         </ListItemButton>
-        <ListItemButton onClick={handleClick} url='/usuarios'>
+        <ListItemButton onClick={handleClick} url='/admin/usuarios'>
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
           <ListItemText primary="Usuarios" />
         </ListItemButton>
-        <ListItemButton onClick={handleClick} url='/login'>
+        <ListItemButton onClick={() => alertRef.current.handleClickOpen()}>
           <ListItemIcon>
             <LayersIcon />
           </ListItemIcon>
           <ListItemText primary="Salir" />
         </ListItemButton>
+        <AlertConfirm 
+            ref={alertRef}
+            titulo={'Salir'}
+            contenido={'Esta seguro que desea salir ?'}
+            accion={handleClickLogout}
+        />  
     </>
 )
 };

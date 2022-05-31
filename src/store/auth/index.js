@@ -14,7 +14,7 @@ const authSlice = createSlice({
             state.loading = false            
             if (payload.jwt) {                
                 localStorage.setItem('token', payload.jwt)
-                window.location.href ='/dashboard'
+                window.location.href ='/admin/dashboard'
             } else state.error = true            
         },
     },

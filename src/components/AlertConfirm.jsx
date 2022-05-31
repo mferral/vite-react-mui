@@ -11,6 +11,7 @@ import { forwardRef, useImperativeHandle } from 'react'
 
 const AlertConfirm = forwardRef(({ titulo, contenido, accion }, ref) => {
     const [open, setOpen] = useState(false);
+    const [disabled, setDisabled] = useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -23,13 +24,17 @@ const AlertConfirm = forwardRef(({ titulo, contenido, accion }, ref) => {
     useImperativeHandle(ref, () => ({
         handleClickOpen() {
             setOpen(true);
+            setDisabled(false);
         }
     }));
     const handleClose = () => {
         setOpen(false);
+        setDisabled(false);
     };
 
     const handleSubmit = () => {
+        setDisabled(true);
+        console.log('click');
         items.accion()
         setOpen(false);
     };
@@ -48,7 +53,7 @@ const AlertConfirm = forwardRef(({ titulo, contenido, accion }, ref) => {
                 <Button autoFocus onClick={handleClose}>
                     Cancelar
                 </Button>
-                <Button onClick={handleSubmit} autoFocus>
+                <Button onClick={handleSubmit} disabled={disabled} autoFocus>
                     Aceptar
                 </Button>
             </DialogActions>
