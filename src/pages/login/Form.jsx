@@ -36,12 +36,7 @@ function Form() {
     const handleSubmit = async (event) => {                
         event.preventDefault();
         if (isValidate(formData, schemaLogin)){
-            try{
-                await dispatch(login(formData))
-                // navigate("/dashboard", { replace: true })
-            }catch(error) {                
-                console.log(error);
-            }
+            await dispatch(login(formData))
         }        
         
     }

@@ -32,10 +32,9 @@ const AlertConfirm = forwardRef(({ titulo, contenido, accion }, ref) => {
         setDisabled(false);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setDisabled(true);
-        console.log('click');
-        items.accion()
+        await items.accion()
         setOpen(false);
     };
     return (

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import env from '@/core/config'
+  import env from '@/core/config'
 import { openSnackbar } from '@/store/general'
 
 const HTTP = axios.create({
@@ -44,6 +44,7 @@ function generateSnackOptions (error, dispatch){
 }
 
 export const HttpPost = async (url, params, dispatch) => {
+  console.log(params);
   try {
     const  res = await HTTP.post(url, params)       
     return res.data

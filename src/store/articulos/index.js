@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { articulosList } from './thunk'
+import { articulosList, articulosCreate } from './thunk'
 
 const initialState = {
     list: [],
@@ -17,15 +17,19 @@ const articulosSlice = createSlice({
     initialState,
     extraReducers: {        
         [articulosList.fulfilled]: (state, { payload }) => {
-            state.loading = false
-            console.log(payload.meta.pagination);
+            state.loading = false            
             state.list = payload.data
             state.pagination = payload.meta.pagination
         },
         [articulosList.rejected]: (state) => {
             state.loading = false
-            console.log('algo salio mal');
         },
+        // [articulosCreate.fulfilled]: (state, { payload }) => {
+        //     state.loading = false                        
+        // },
+        // [articulosCreate.pending]: (state) => {
+        //     state.loading = true
+        // },     
     },
 })
 export default articulosSlice.reducer;
