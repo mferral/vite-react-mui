@@ -11,18 +11,33 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 
 import { useValidate } from '@/core/hooks/useValidate'
-import { schemaLogin } from './schema'
+import { schema } from './schema'
 
-import { articulosCreate } from '@/store/articulos/thunk'
-import { useRef } from 'react'
-import { useState } from 'react';
-import { useDispatch } from 'react-redux'
-import { useNavigate } from "react-router-dom";
+import { articulosCreate, articulosGet, articulosUpdate } from '@/store/articulos/thunk'
+import { useRef, useEffect, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams } from "react-router-dom";
 
 function Form() {
     const alertRef = useRef();
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    // const articulo = useSelector((state) => state.articulos)
+    const { id } = useParams();    
+
+    useEffect( () => {
+        async function check() {
+            const {payload} = await dispatch(articulosGet(id))            
+            if (!payload.error) {
+                setFormData({
+                    ...formData,                
+                    ...payload.data.attributes,
+                    id: payload.data.id,
+                })
+            }
+        }
+        if (id) check()
+    }, [])
 
     const { isValidate, errors } = useValidate()
 
@@ -40,19 +55,19 @@ function Form() {
         })
     };
     
-    const handleValidate = () => {
-        if (isValidate(formData, schemaLogin)){
+    const handleValidate = () => {        
+        if (isValidate(formData, schema)){
             alertRef.current.handleClickOpen()
         }
     }
 
     const submit = async () => {
-        await dispatch(articulosCreate(formData))        
+        if (!id) await dispatch(articulosCreate(formData)); else await dispatch(articulosUpdate(formData));               
         navigate("/admin/articulos")
     };
 
     return (
-    <>
+    <>        
         <Box component="form" id="formArticulo"  sx={{ pt: 2, pb: 2 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={4}>
@@ -62,7 +77,6 @@ function Form() {
                     <TextField margin="normal" size="small" required fullWidth id="descripcion" name="descripcion" label="Descripcion" onChange={handleChange('descripcion')} value={formData.descripcion} error={errors.descripcion?.error} helperText={errors.descripcion?.message}  />
                 </Grid>
                 <Grid item xs={12} sm={2}>
-                    {/* <TextField margin="normal" size="small" required fullWidth id="precio" name="precio" label="Precio" onChange={handleChange}  /> */}
                     <FormControl fullWidth size="small" sx={{ mt: 2 }} variant="outlined" error={errors.precio?.error}>
                         <InputLabel htmlFor="precio">Precio</InputLabel>
                         <OutlinedInput
@@ -82,7 +96,7 @@ function Form() {
                 <Button variant="contained" onClick={handleValidate}>Guardar</Button>
             </Stack>
         </Box>
-        <AlertConfirm ref={alertRef} titulo={'Agregar Articulo'} // contenido={'Los datos son correctos ?'}
+        <AlertConfirm ref={alertRef} titulo={'Guardar Articulo'} // contenido={'Los datos son correctos ?'}
             accion={submit} />
     </>
     )

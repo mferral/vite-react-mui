@@ -15,4 +15,10 @@ export default [
         auth: true,
         layout: AdminLayout
     },
+    {
+        path:"/admin/articulo/:id",
+        component:Articulo,
+        auth: true,
+        layout: AdminLayout
+    },
 ]

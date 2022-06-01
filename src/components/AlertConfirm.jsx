@@ -27,9 +27,11 @@ const AlertConfirm = forwardRef(({ titulo, contenido, accion }, ref) => {
             setDisabled(false);
         }
     }));
-    const handleClose = () => {
-        setOpen(false);
-        setDisabled(false);
+    const handleClose = (event, reason) => {
+        if (reason != "backdropClick") {
+            setOpen(false);
+            setDisabled(false);
+        }
     };
 
     const handleSubmit = async () => {
@@ -49,7 +51,7 @@ const AlertConfirm = forwardRef(({ titulo, contenido, accion }, ref) => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={handleClose}>
+                <Button autoFocus onClick={handleClose} disabled={disabled} >
                     Cancelar
                 </Button>
                 <Button onClick={handleSubmit} disabled={disabled} autoFocus>

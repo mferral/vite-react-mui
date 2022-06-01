@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { articulosList, articulosCreate } from './thunk'
+import { articulosList, articulosCreate, articulosGet, articulosUpdate } from './thunk'
 
 const initialState = {
     list: [],
@@ -9,6 +9,7 @@ const initialState = {
         pageSize: 0
     },
     page: 1,
+    result: {},
     loading: true,
 }
 
@@ -24,6 +25,13 @@ const articulosSlice = createSlice({
         [articulosList.rejected]: (state) => {
             state.loading = false
         },
+        [articulosGet.fulfilled]: (state, { payload }) => {
+            state.loading = false
+            state.result = payload.data
+        },
+        [articulosGet.pending]: (state) => {
+            state.loading = true
+        },  
         // [articulosCreate.fulfilled]: (state, { payload }) => {
         //     state.loading = false                        
         // },

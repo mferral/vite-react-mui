@@ -11,6 +11,9 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import { MainListItems } from './listitems';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useEffect } from 'react'
 
 import { useState } from 'react';
 
@@ -55,11 +58,21 @@ const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open',
                 width: theme.spacing(9),
             },
         }),
+        // [theme.breakpoints.up('xs')]: {
+        //     width: theme.spacing(7),
+        // },
         },
     }),
 );
 function Header() {
-    const [open, setOpen] = useState(true);
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
+    useEffect(() => {
+        if(!matches) setOpen(false);
+    }, [matches])
+
+    const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -72,18 +85,20 @@ function Header() {
                     pr: '24px', // keep right padding when drawer closed
                 }}
             >
-            <IconButton
+            {matches && <IconButton
                 edge="start"
                 color="inherit"
                 aria-label="open drawer"
                 onClick={toggleDrawer}
                 sx={{
                     marginRight: '36px',
-                    ...(open && { display: 'none' }),
+                    ...(open && { display: 'none'}),
+                    // display: { xs: 'none', sm: 'inline-block' },
                 }}
+                
             >
             <MenuIcon />
-            </IconButton>
+            </IconButton>}
             <Typography
                 component="h1"
                 variant="h6"
@@ -106,7 +121,7 @@ function Header() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'flex-end',
-                    px: [1],
+                    px: [1],                    
                 }}
             >
             <IconButton onClick={toggleDrawer}>

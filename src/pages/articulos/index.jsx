@@ -12,9 +12,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
 
 import { useNavigate } from "react-router-dom";
-
 import { useEffect } from 'react'
 import { articulosList } from '@/store/articulos/thunk'
 import { useSelector, useDispatch } from 'react-redux'
@@ -29,7 +30,6 @@ function Articulos() {
     }, [])
 
     const handleChangePage = (event, newPage) => {
-        console.log(newPage);
         dispatch(articulosList({page: newPage + 1}))
     };
     return (    
@@ -55,7 +55,8 @@ function Articulos() {
                             <TableCell width={20}>Id</TableCell>
                             <TableCell>Titulo</TableCell>
                             <TableCell>Descripcion</TableCell>
-                            <TableCell align="right">Precio</TableCell>                       
+                            <TableCell align="right">Precio</TableCell>
+                            <TableCell align="right"></TableCell>                       
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -70,6 +71,11 @@ function Articulos() {
                             <TableCell>{row.attributes.titulo}</TableCell>
                             <TableCell>{row.attributes.descripcion}</TableCell>
                             <TableCell align="right">{row.attributes.precio}</TableCell>
+                            <TableCell align="right">
+                            <IconButton aria-label="edit" size="small" onClick={()=> navigate(`/admin/articulo/${row.id}`)}>
+                                <EditIcon fontSize="inherit" />
+                            </IconButton>
+                            </TableCell>
                         </TableRow>
                     ))}
                     </TableBody>

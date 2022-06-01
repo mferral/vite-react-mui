@@ -5,7 +5,8 @@ export const useValidate = () => {
     return {
         isValidate: (data, schema) => {
             setErrors({})
-            const { error } = schema.validate(data, { abortEarly: false })            
+            const { error } = schema.validate(data, { abortEarly: false, allowUnknown: true  })      
+            // console.log(schema.validate(data, { abortEarly: false }));      
             if (error) {
                 const err = error.details.reduce((obj, item) => {
                     return {
