@@ -9,7 +9,7 @@ function timeout(ms) {
 export const articulosList = createAsyncThunk(
     'articulos/articulosList',
     async (data, {dispatch}) => {                    
-        const  res = await HttpGet(`articulos?pagination[page]=${data.page}&pagination[pageSize]=${env.pageSize}`, {dispatch})   
+        const  res = await HttpGet(`articulos?pagination[page]=${data.page}&pagination[pageSize]=${env.pageSize}&sort[0]=id`, {dispatch})   
         return res        
     }
 )
@@ -28,7 +28,7 @@ export const articulosCreate = createAsyncThunk(
 
 export const articulosUpdate = createAsyncThunk(
     'articulos/articulosUpdate',
-    async (data, {dispatch}) => {    
+    async (data, {dispatch}) => {            
         const params = {
             data: {...data}
         }          
@@ -42,7 +42,7 @@ export const articulosGet = createAsyncThunk(
     'articulos/articulosGet',
     async (id, {dispatch}) => {            
         // await timeout(3000);
-        const  res = await HttpGet(`articulos/${id}`, {dispatch})   
+        const  res = await HttpGet(`articulos/${id}?populate=%2A`, {dispatch})   
         return res        
     }
 )

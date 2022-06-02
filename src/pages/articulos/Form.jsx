@@ -9,17 +9,21 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
+import UploadImage from '@/components/UploadImage'
+import env from '@/core/config'
 
 import { useValidate } from '@/core/hooks/useValidate'
 import { schema } from './schema'
-
-import { articulosCreate, articulosGet, articulosUpdate } from '@/store/articulos/thunk'
 import { useRef, useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from "react-router-dom";
 
+import { articulosCreate, articulosGet, articulosUpdate } from '@/store/articulos/thunk'
+import { uploadFile } from '@/store/uploads/thunk'
+
 function Form() {
     const alertRef = useRef();
+    const uploadRef = useRef();
     const dispatch = useDispatch()
     const navigate = useNavigate()
     // const articulo = useSelector((state) => state.articulos)
@@ -28,12 +32,15 @@ function Form() {
     useEffect( () => {
         async function check() {
             const {payload} = await dispatch(articulosGet(id))            
-            if (!payload.error) {
+            if (!payload.error) {                
                 setFormData({
-                    ...formData,                
-                    ...payload.data.attributes,
                     id: payload.data.id,
-                })
+                    titulo: payload.data.attributes.titulo,
+                    descripcion: payload.data.attributes.descripcion,
+                    precio: payload.data.attributes.precio,
+                    foto: payload.data.attributes.foto.data ? payload.data.attributes.foto?.data[0].id : null,
+                    url: payload.data.attributes.foto.data ? `${env.mediaURL}${payload.data.attributes.foto?.data[0].attributes.url}` : '',
+                })                
             }
         }
         if (id) check()
@@ -45,6 +52,8 @@ function Form() {
         titulo: '',
         descripcion: '',
         precio: '0.00',
+        foto: null,
+        // url: ''
     });
 
     const handleChange  = (prop) =>  (event) => {
@@ -55,14 +64,24 @@ function Form() {
         })
     };
     
-    const handleValidate = () => {        
+    const handleValidate = async () => {        
         if (isValidate(formData, schema)){
             alertRef.current.handleClickOpen()
         }
     }
 
     const submit = async () => {
-        if (!id) await dispatch(articulosCreate(formData)); else await dispatch(articulosUpdate(formData));               
+        let params = {
+            ...formData
+        };
+        if (uploadRef.current.getUploadFile()){
+            const { payload } = await dispatch(uploadFile(uploadRef.current.getUploadFile()))                                    
+            params ={
+                ...params,
+                foto: payload[0].id
+            }
+        }        
+        if (!id) await dispatch(articulosCreate(params)); else await dispatch(articulosUpdate(params));               
         navigate("/admin/articulos")
     };
 
@@ -70,6 +89,9 @@ function Form() {
     <>        
         <Box component="form" id="formArticulo"  sx={{ pt: 2, pb: 2 }}>
             <Grid container spacing={2}>
+                <Grid item xs={12} sm={12}>
+                    <UploadImage ref={uploadRef} url={formData.url} />
+                </Grid>
                 <Grid item xs={12} sm={4}>
                     <TextField margin="normal" size="small" required fullWidth id="titulo" name="titulo" label="Titulo" onChange={handleChange('titulo')} value={formData.titulo} error={errors.titulo?.error} helperText={errors.titulo?.message}  />
                 </Grid>

@@ -44,9 +44,22 @@ function generateSnackOptions (error, dispatch){
 }
 
 export const HttpPost = async (url, params, dispatch) => {
-  console.log(params);
   try {
     const  res = await HTTP.post(url, params)       
+    return res.data
+  }catch (error){                 
+    generateSnackOptions(error, dispatch)
+    return error.response.data
+  }
+}
+
+export const HttpPostMedia = async (url, params, dispatch) => {
+  try {
+    const  res = await HTTP.post(url, params, {
+              headers: {
+                "Content-type": "multipart/form-data",
+              },                    
+  })       
     return res.data
   }catch (error){                 
     generateSnackOptions(error, dispatch)
