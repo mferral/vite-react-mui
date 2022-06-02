@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Form from './Form'
-import Footer from '@/layouts/admin/Footer'
+import Footer from '@/layouts/admin/footer'
 import SnackMessage from '@/components/SnackMessage';
 // import Button from '@mui/material/Button';
 const theme = createTheme();

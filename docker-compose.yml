@@ -1,0 +1,9 @@
+version: "3"
+services: 
+  front:
+    build: .
+    container_name: mui
+    env_file:
+      - .env
+    ports:
+      - "3000:80"

@@ -1,6 +1,6 @@
 import AdminLayout from '@/layouts/admin'
 import Articulos from '@/pages/articulos'
-import Articulo from '@/pages/articulos/add'
+import Articulo from '@/pages/articulos/Add'
 
 export default [
     {
