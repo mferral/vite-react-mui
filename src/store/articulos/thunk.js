@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { HttpGet, HttpPost, HttpPut } from '@/core/http'
+import { HttpGet, HttpPost, HttpPut, HttpDelete } from '@/core/http'
 import env from '@/core/config'
 
 function timeout(ms) {
@@ -43,6 +43,15 @@ export const articulosGet = createAsyncThunk(
     async (id, {dispatch}) => {            
         // await timeout(3000);
         const  res = await HttpGet(`articulos/${id}?populate=%2A`, {dispatch})   
+        return res        
+    }
+)
+
+export const articulosDelete = createAsyncThunk(
+    'articulos/articulosDelete',
+    async (id, {dispatch}) => {            
+        // await timeout(3000);
+        const  res = await HttpDelete(`articulos/${id}`, {dispatch})   
         return res        
     }
 )
