@@ -39,7 +39,7 @@ function Form() {
                     descripcion: payload.data.attributes.descripcion,
                     precio: payload.data.attributes.precio,
                     foto: payload.data.attributes.foto.data ? payload.data.attributes.foto?.data[0].id : null,
-                    url: payload.data.attributes.foto.data ? `${env.mediaURL}${payload.data.attributes.foto?.data[0].attributes.url}` : '',
+                    url: payload.data.attributes.foto.data ? `${env.baseUrl}${payload.data.attributes.foto?.data[0].attributes.url}` : '',
                 })                
             }
         }

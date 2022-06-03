@@ -3,7 +3,7 @@ import axios from 'axios'
 import { openSnackbar } from '@/store/general'
 
 const HTTP = axios.create({
-  baseURL: env.baseURL,
+  baseURL: env.apiUrl,
 })
 
 HTTP.interceptors.request.use((request) => {
