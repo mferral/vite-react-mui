@@ -8,8 +8,9 @@ function timeout(ms) {
 
 export const articulosList = createAsyncThunk(
     'articulos/articulosList',
-    async (data, {dispatch}) => {                    
-        const  res = await HttpGet(`articulos?pagination[page]=${data.page}&pagination[pageSize]=${env.pageSize}&sort[0]=id`, {dispatch})   
+    async (data, {dispatch}) => {      
+        const filter = data.filter ? `&filters[$or][0][titulo][$contains][0]=${data.filter}&filters[$or][1][descripcion][$contains][1]=${data.filter}` : ''         
+        const  res = await HttpGet(`articulos?pagination[page]=${data.page}&pagination[pageSize]=${env.pageSize}&sort[0]=id${filter}`, {dispatch})   
         return res        
     }
 )

@@ -15,9 +15,13 @@ import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
 
 import AlertConfirm from '@/components/AlertConfirm';
-
 import { useNavigate } from "react-router-dom";
 import { useRef, useEffect, useState } from 'react'
 import { articulosList } from '@/store/articulos/thunk'
@@ -31,10 +35,50 @@ function Articulos() {
     const articulos = useSelector((state) => state.articulos)
 
     const [deleteId, setDeleteId] = useState(0);
+    const [filter, setFilter] = useState('');
+    const [searchParams, setSearchParams] = useState({
+        textSearch: '',
+        clear: true
+    });
 
     useEffect(() => {
         dispatch(articulosList({page: 1}))
     }, [])
+
+    const handleChangeSearch  = (prop) =>  (event) => {
+        const { value } = event.target; 
+        let clear = true
+        if(value === ''){
+            clear = true
+        }else clear =false
+
+        setSearchParams({
+            ...searchParams,
+            [prop]: value,
+            clear
+        })
+    };
+
+    const clearSearch  = async () => {        
+        setSearchParams({
+            ...searchParams,
+            textSearch: '',
+            clear: true
+        })
+        setFilter('')
+        await dispatch(articulosList({page: 1}))
+    };
+
+    const keyDown  = async (e) => {
+        if(e.keyCode == 13){
+            setFilter(e.target.value)
+            setSearchParams({
+                ...searchParams,
+                textSearch: e.target.value,
+            })
+            await dispatch(articulosList({page: 1, filter: e.target.value}))                        
+        }
+    }
 
     const handleDelete = async (id) => {
         setDeleteId(id)                
@@ -43,11 +87,16 @@ function Articulos() {
 
     const deleteSubmit = async () => {        
         await dispatch(articulosDelete(deleteId))
-        await dispatch(articulosList({page: 0}))
+        await dispatch(articulosList({page: 1}))
     }
 
-    const handleChangePage = (event, newPage) => {
-        dispatch(articulosList({page: newPage + 1}))
+    const handleChangePage = async (event, newPage) => {        
+            setSearchParams({
+                ...searchParams,
+                textSearch: filter,
+                clear: filter == '' ?  true : false,
+            })        
+        await dispatch(articulosList({page: newPage + 1, filter: filter}))
     };
     return (    
         <>
@@ -65,6 +114,34 @@ function Articulos() {
                     </Box>
                 </Grid>
             </Grid>
+            
+            <FormControl fullWidth size="small" sx={{ mt: 2, mb: 2}} variant="outlined">
+                <InputLabel htmlFor="search">Buscar</InputLabel>
+                <OutlinedInput
+                    id="search"  
+                    type={'text'}
+                    value={searchParams.textSearch} 
+                    onChange={handleChangeSearch('textSearch')}                           
+                    onKeyDown={keyDown}
+                    endAdornment={                        
+                        <InputAdornment position="end">
+                            {!searchParams.clear &&
+                            <IconButton
+                                aria-label="toggle"
+                                onClick={clearSearch}
+                                edge="end"
+                                size="small"
+                            >
+                                <CloseIcon fontSize="inherit"  /> 
+
+                            </IconButton>
+                        }
+                        </InputAdornment>
+                        }
+                    label="Buscar"
+                    />                    
+            </FormControl>
+            
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
