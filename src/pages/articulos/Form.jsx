@@ -115,6 +115,7 @@ function Form() {
                 </Grid>
             </Grid>
             <Stack direction="row" justifyContent="right" alignItems="center" spacing={2}>
+                <Button variant="outlined" onClick={() => navigate(-1) } >Regresar</Button>
                 <Button variant="contained" onClick={handleValidate}>Guardar</Button>
             </Stack>
         </Box>
