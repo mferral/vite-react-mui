@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import { landing } from './thunk'
 const initialState = {
     snackbar: false,
     snackText: '',
     snackType: '',
+    loadingLanding: false,
+    landing: {}
 }
 
 export const generalSlice = createSlice({
@@ -19,6 +21,15 @@ export const generalSlice = createSlice({
             state.snackText = ''
             state.snackbar = false
         },        
+    },
+    extraReducers: {   
+        [landing.pending]: (state) => {
+            state.loadingLanding = true
+        },     
+        [landing.fulfilled]: (state, { payload }) => {            
+            state.loadingLanding = false            
+            state.landing = payload.data.attributes
+        },
     },
 })
 
