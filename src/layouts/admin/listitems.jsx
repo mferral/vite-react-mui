@@ -45,19 +45,19 @@ export const MainListItems = () =>{
   const classes = useStyles();
   return(
     <>
-        <ListItemButton component={NavLink} to={'/admin/dashboard'} className={classes.listItem} >
+        <ListItemButton component={NavLink} to={'/admin/dashboard'} className={classes.listItem} name="item-dashboard" >
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
-        <ListItemButton component={NavLink} to={'/admin/articulos'} className={classes.listItem} >          
+        <ListItemButton component={NavLink} to={'/admin/articulos'} className={classes.listItem} name="item-articulos" >          
           <ListItemIcon>
             <ShoppingCartIcon />
           </ListItemIcon>
           <ListItemText primary="Articulos" />
         </ListItemButton>
-        <ListItemButton component={NavLink} to={'/admin/usuarios'} className={classes.listItem}>
+        <ListItemButton component={NavLink} to={'/admin/usuarios'} className={classes.listItem} name="item-usuarios">
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>

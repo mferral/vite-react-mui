@@ -118,7 +118,7 @@ function Articulos() {
             <FormControl fullWidth size="small" sx={{ mt: 2, mb: 2}} variant="outlined">
                 <InputLabel htmlFor="search">Buscar</InputLabel>
                 <OutlinedInput
-                    id="search"  
+                    id="search"                    
                     type={'text'}
                     value={searchParams.textSearch} 
                     onChange={handleChangeSearch('textSearch')}                           
@@ -131,9 +131,9 @@ function Articulos() {
                                 onClick={clearSearch}
                                 edge="end"
                                 size="small"
+                                id="clear"
                             >
                                 <CloseIcon fontSize="inherit"  /> 
-
                             </IconButton>
                         }
                         </InputAdornment>
@@ -143,7 +143,7 @@ function Articulos() {
             </FormControl>
             
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" name="table-articulos">
                     <TableHead>
                         <TableRow>
                             <TableCell width={20}>Id</TableCell>
@@ -157,7 +157,7 @@ function Articulos() {
                     {articulos.list.map((row) => (
                         <TableRow
                         key={row.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}                        
                         >
                             <TableCell>
                                 {row.id}
@@ -166,7 +166,7 @@ function Articulos() {
                             <TableCell>{row.attributes.descripcion}</TableCell>
                             <TableCell align="right">{row.attributes.precio}</TableCell>
                             <TableCell align="right">
-                            <IconButton aria-label="edit" size="small" onClick={()=> navigate(`/admin/articulo/${row.id}`)}>
+                            <IconButton aria-label="edit" size="small" onClick={()=> navigate(`/admin/articulo/${row.id}`)} className="articulo-edit">
                                 <EditIcon fontSize="inherit" />
                             </IconButton>
                             <IconButton aria-label="delete" size="small" onClick={() => handleDelete(row.id)}>
