@@ -1,0 +1,14 @@
+{
+    "name": "e2e",    
+    "version": "0.0.0",
+    "scripts": {
+        "cypress": "./node_modules/.bin/cypress"
+    },
+    "keywords": [],
+    "author": "Miguel Ferral",
+    "license": "ISC",
+    "private": true,
+    "devDependencies": {
+        "cypress": "9.6.1"
+    }
+}

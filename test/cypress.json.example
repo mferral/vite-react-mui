@@ -1,0 +1,10 @@
+{
+    "video": false,
+    "screenshotOnRunFailure": false,
+    "env": {
+        "HOST": "http://0.0.0.0:3000/",
+        "HOST_API": "http://192.168.0.106:1337/api/",
+        "USER": "admin@gmail.com",
+        "PASS": "123456789"
+    }
+}
