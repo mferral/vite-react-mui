@@ -6,8 +6,14 @@ const HTTP = axios.create({
   baseURL: env.apiUrl,
 })
 
+const decode = () => {
+  var buf = Buffer.from('abc');
+  console.log(buf);
+}
+
 HTTP.interceptors.request.use((request) => {
-  if (localStorage.getItem('token')) request.headers.Authorization = `Bearer ${localStorage.getItem('token')}`  
+  const token = localStorage.getItem('token')  
+  if (token) request.headers.Authorization = `Bearer ${token}`    
   return request
 })
 
