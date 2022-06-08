@@ -10,32 +10,54 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useNavigate } from "react-router-dom";
 import AlertConfirm from '@/components/AlertConfirm';
 import { useRef } from 'react'
+import { NavLink } from 'react-router-dom';
+
+import { makeStyles } from '@mui/styles';
+import { useTheme } from '@mui/styles';
 
 export const MainListItems = () =>{
   const navigateTo = useNavigate();
   const alertRef = useRef();
-  const handleClick = (e) => navigateTo(e.currentTarget.getAttribute('url'))
+
+  const theme = useTheme();
+  const useStyles = makeStyles({
+    listItem: {
+      '&:hover': {
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.primary.main,
+        '& .MuiListItemIcon-root': {
+          color: theme.palette.primary.main,
+        },
+      },
+      '&.active .MuiListItemIcon-root, &.active': {
+        color: theme.palette.primary.main,
+      },
+      '&.active .MuiTypography-root': {
+        fontWeight: 'bold',
+      },
+    },
+  })
 
   const handleClickLogout = (e) => {
     localStorage.removeItem('token')
     navigateTo('/login')
   }
-  
+  const classes = useStyles();
   return(
     <>
-        <ListItemButton onClick={handleClick} url='/admin/dashboard'>
+        <ListItemButton component={NavLink} to={'/admin/dashboard'} className={classes.listItem} >
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
-        <ListItemButton onClick={handleClick} url='/admin/articulos'>          
+        <ListItemButton component={NavLink} to={'/admin/articulos'} className={classes.listItem} >          
           <ListItemIcon>
             <ShoppingCartIcon />
           </ListItemIcon>
           <ListItemText primary="Articulos" />
         </ListItemButton>
-        <ListItemButton onClick={handleClick} url='/admin/usuarios'>
+        <ListItemButton component={NavLink} to={'/admin/usuarios'} className={classes.listItem}>
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
